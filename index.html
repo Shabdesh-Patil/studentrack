@@ -7,26 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <style>
 :root {
-  --bg: #0a0e1a;
-  --bg2: #0f1629;
-  --bg3: #161e35;
-  --bg4: #1c2540;
-  --card: rgba(22,30,53,0.9);
-  --border: rgba(99,130,255,0.15);
-  --border2: rgba(99,130,255,0.3);
-  --accent: #6382ff;
-  --accent2: #ff6b6b;
-  --accent3: #00e5a0;
-  --accent4: #ffd166;
-  --accent5: #c77dff;
-  --text: #e8eaf6;
-  --text2: #8892b0;
-  --text3: #4a5578;
-  --glow: 0 0 30px rgba(99,130,255,0.15);
-  --glow2: 0 0 20px rgba(0,229,160,0.1);
+  --bg: #f0f4ff;
+  --bg2: #ffffff;
+  --bg3: #e8eeff;
+  --bg4: #dce5ff;
+  --card: rgba(255,255,255,0.95);
+  --border: rgba(44,90,220,0.12);
+  --border2: rgba(44,90,220,0.28);
+  --accent: #2c5adc;
+  --accent2: #e53e3e;
+  --accent3: #0f9e6e;
+  --accent4: #d97706;
+  --accent5: #7c3aed;
+  --accent6: #0891b2;
+  --accent7: #db2777;
+  --accent8: #059669;
+  --text: #0f1b3d;
+  --text2: #4a5987;
+  --text3: #8896c0;
+  --glow: 0 4px 24px rgba(44,90,220,0.10);
+  --glow2: 0 4px 16px rgba(15,158,110,0.08);
   --radius: 16px;
   --radius2: 10px;
   --font: 'Space Grotesk', sans-serif;
@@ -45,15 +49,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Animated background */
 body::before {
   content:'';
   position:fixed;
   inset:0;
   background:
-    radial-gradient(ellipse 80% 50% at 10% 20%, rgba(99,130,255,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 90% 80%, rgba(0,229,160,0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(199,125,255,0.04) 0%, transparent 70%);
+    radial-gradient(ellipse 80% 50% at 10% 20%, rgba(44,90,220,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 80%, rgba(15,158,110,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(124,58,237,0.03) 0%, transparent 70%);
   pointer-events:none;
   z-index:0;
 }
@@ -65,8 +68,8 @@ body::before {
 .sidebar {
   width:240px;
   flex-shrink:0;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
+  background: #ffffff;
+  border-right: 1px solid rgba(44,90,220,0.12);
   display:flex;
   flex-direction:column;
   position:fixed;
@@ -84,7 +87,7 @@ body::before {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  background: linear-gradient(135deg, #2c5adc, #7c3aed);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -97,38 +100,38 @@ body::before {
 
 .sidebar-nav { flex:1; padding:16px 12px; overflow-y:auto; }
 .nav-section { margin-bottom:24px; }
-.nav-label { font-size:10px; font-weight:700; color:#6b7db3; letter-spacing:1.8px; text-transform:uppercase; padding: 0 8px; margin-bottom:8px; }
+.nav-label { font-size:10px; font-weight:700; color:#8896c0; letter-spacing:1.8px; text-transform:uppercase; padding: 0 8px; margin-bottom:8px; }
 
 .nav-btn {
   display:flex; align-items:center; gap:10px;
   width:100%; padding:10px 12px;
   background:transparent; border:none; cursor:pointer;
-  color:var(--text2); font-family:var(--font); font-size:13.5px; font-weight:500;
+  color:#4a5987; font-family:var(--font); font-size:13.5px; font-weight:500;
   border-radius:var(--radius2); transition:all 0.2s;
   text-align:left;
 }
-.nav-btn:hover { background:rgba(99,130,255,0.1); color:var(--text); }
-.nav-btn.active { background:rgba(99,130,255,0.15); color:var(--accent); }
+.nav-btn:hover { background:rgba(44,90,220,0.08); color:#2c5adc; }
+.nav-btn.active { background:rgba(44,90,220,0.12); color:#2c5adc; }
 .nav-btn .icon { width:18px; height:18px; flex-shrink:0; opacity:0.7; }
 .nav-btn.active .icon { opacity:1; }
 
 /* Profile mini in sidebar */
 .sidebar-profile {
   padding:16px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(44,90,220,0.12);
   display:flex; align-items:center; gap:10px;
   cursor:pointer;
   transition: background 0.2s;
 }
-.sidebar-profile:hover { background:rgba(99,130,255,0.05); }
+.sidebar-profile:hover { background:rgba(44,90,220,0.05); }
 .profile-avatar {
   width:36px; height:36px; border-radius:50%;
-  background:linear-gradient(135deg, var(--accent), var(--accent5));
+  background:linear-gradient(135deg, #2c5adc, #7c3aed);
   display:flex; align-items:center; justify-content:center;
   font-size:14px; font-weight:700; color:#fff; flex-shrink:0;
 }
-.profile-name { font-size:13px; font-weight:600; color:var(--text); line-height:1.2; }
-.profile-sub { font-size:11px; color:var(--text3); }
+.profile-name { font-size:13px; font-weight:600; color:#0f1b3d; line-height:1.2; }
+.profile-sub { font-size:11px; color:#8896c0; }
 
 /* MAIN */
 .main {
@@ -142,50 +145,50 @@ body::before {
 /* TOPBAR */
 .topbar {
   height:64px;
-  background:rgba(10,14,26,0.85);
+  background:rgba(255,255,255,0.92);
   backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid rgba(44,90,220,0.12);
   display:flex; align-items:center;
   padding:0 28px; gap:16px;
   position:sticky; top:0; z-index:90;
 }
 .topbar-title {
   font-family:var(--font-display);
-  font-size:18px; font-weight:800; color:var(--text);
+  font-size:18px; font-weight:800; color:#0f1b3d;
   flex:1;
 }
 .topbar-date {
   font-family:var(--font-mono);
-  font-size:12px; color:var(--text2);
-  background:rgba(99,130,255,0.08);
+  font-size:12px; color:#4a5987;
+  background:rgba(44,90,220,0.07);
   padding:6px 12px; border-radius:20px;
-  border:1px solid var(--border);
+  border:1px solid rgba(44,90,220,0.15);
 }
 .topbar-google-btn {
   display:flex; align-items:center; gap:8px;
-  background:rgba(99,130,255,0.12);
-  border:1px solid var(--border2);
-  color:var(--text); font-size:13px; font-weight:500;
+  background:rgba(44,90,220,0.08);
+  border:1px solid rgba(44,90,220,0.25);
+  color:#2c5adc; font-size:13px; font-weight:500;
   padding:8px 14px; border-radius:8px; cursor:pointer;
   transition:all 0.2s; font-family:var(--font);
 }
-.topbar-google-btn:hover { background:rgba(99,130,255,0.2); }
-.topbar-google-btn.signed-in { background:rgba(0,229,160,0.1); border-color:rgba(0,229,160,0.3); color:var(--accent3); }
+.topbar-google-btn:hover { background:rgba(44,90,220,0.15); }
+.topbar-google-btn.signed-in { background:rgba(15,158,110,0.1); border-color:rgba(15,158,110,0.3); color:#0f9e6e; }
 
 /* PAGES */
-.page { display:none; padding:28px; animation: fadeIn 0.3s ease; }
+.page { display:none; padding:28px; animation: fadeIn 0.3s ease; background:transparent; }
 .page.active { display:block; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
 /* ======== CARDS ======== */
 .card {
-  background:var(--card);
-  border:1px solid var(--border);
+  background:#ffffff;
+  border:1px solid rgba(44,90,220,0.10);
   border-radius:var(--radius);
-  backdrop-filter:blur(10px);
+  box-shadow:0 2px 12px rgba(44,90,220,0.06);
   transition:border-color 0.2s, box-shadow 0.2s;
 }
-.card:hover { border-color:var(--border2); box-shadow:var(--glow); }
+.card:hover { border-color:rgba(44,90,220,0.22); box-shadow:0 6px 24px rgba(44,90,220,0.10); }
 
 /* STAT CARDS */
 .stats-grid {
@@ -195,11 +198,12 @@ body::before {
   margin-bottom:24px;
 }
 .stat-card {
-  background:var(--card);
-  border:1px solid var(--border);
+  background:#ffffff;
+  border:1px solid rgba(44,90,220,0.10);
   border-radius:var(--radius);
   padding:20px;
   position:relative; overflow:hidden;
+  box-shadow:0 2px 10px rgba(44,90,220,0.05);
   transition:all 0.25s;
 }
 .stat-card::before {
@@ -207,16 +211,16 @@ body::before {
   position:absolute; top:0; left:0; right:0; height:3px;
   border-radius:var(--radius) var(--radius) 0 0;
 }
-.stat-card.blue::before { background:linear-gradient(90deg,var(--accent),var(--accent5)); }
-.stat-card.green::before { background:linear-gradient(90deg,var(--accent3),#00b37e); }
-.stat-card.red::before { background:linear-gradient(90deg,var(--accent2),#ff9f43); }
-.stat-card.yellow::before { background:linear-gradient(90deg,var(--accent4),#f9ca24); }
-.stat-card.purple::before { background:linear-gradient(90deg,var(--accent5),var(--accent)); }
-.stat-card:hover { transform:translateY(-2px); box-shadow:var(--glow); border-color:var(--border2); }
+.stat-card.blue::before { background:linear-gradient(90deg,#2c5adc,#7c3aed); }
+.stat-card.green::before { background:linear-gradient(90deg,#0f9e6e,#059669); }
+.stat-card.red::before { background:linear-gradient(90deg,#e53e3e,#d97706); }
+.stat-card.yellow::before { background:linear-gradient(90deg,#d97706,#f59e0b); }
+.stat-card.purple::before { background:linear-gradient(90deg,#7c3aed,#2c5adc); }
+.stat-card:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(44,90,220,0.12); border-color:rgba(44,90,220,0.25); }
 .stat-label { font-size:11px; font-weight:600; color:#6b7db3; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
-.stat-value { font-family:var(--font-display); font-size:28px; font-weight:800; color:var(--text); line-height:1; display:flex; align-items:baseline; gap:4px; }
-.stat-value span { font-size:13px; font-weight:500; color:var(--text2); line-height:1; }
-.stat-sub { font-size:11.5px; color:var(--text2); margin-top:8px; line-height:1.4; }
+.stat-value { font-family:var(--font-display); font-size:28px; font-weight:800; color:#0f1b3d; line-height:1; display:flex; align-items:baseline; gap:4px; }
+.stat-value span { font-size:13px; font-weight:500; color:#4a5987; line-height:1; }
+.stat-sub { font-size:11.5px; color:#4a5987; margin-top:8px; line-height:1.4; }
 .stat-icon { position:absolute; top:16px; right:16px; opacity:0.15; font-size:26px; }
 
 /* GRID LAYOUTS */
@@ -228,19 +232,19 @@ body::before {
 
 .card-header {
   padding:18px 20px 12px;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid rgba(44,90,220,0.10);
   display:flex; align-items:center; justify-content:space-between;
 }
-.card-title { font-family:var(--font-display); font-size:14px; font-weight:800; color:var(--text); letter-spacing:-0.2px; }
+.card-title { font-family:var(--font-display); font-size:14px; font-weight:800; color:#0f1b3d; letter-spacing:-0.2px; }
 .card-badge {
   font-family:var(--font-mono);
   font-size:10px; padding:3px 8px;
   border-radius:20px; font-weight:500;
 }
-.badge-blue { background:rgba(99,130,255,0.15); color:var(--accent); border:1px solid rgba(99,130,255,0.2); }
-.badge-green { background:rgba(0,229,160,0.1); color:var(--accent3); border:1px solid rgba(0,229,160,0.2); }
-.badge-red { background:rgba(255,107,107,0.1); color:var(--accent2); border:1px solid rgba(255,107,107,0.2); }
-.badge-yellow { background:rgba(255,209,102,0.1); color:var(--accent4); border:1px solid rgba(255,209,102,0.2); }
+.badge-blue { background:rgba(44,90,220,0.1); color:#2c5adc; border:1px solid rgba(44,90,220,0.2); }
+.badge-green { background:rgba(15,158,110,0.1); color:#0f9e6e; border:1px solid rgba(15,158,110,0.2); }
+.badge-red { background:rgba(229,62,62,0.08); color:#e53e3e; border:1px solid rgba(229,62,62,0.2); }
+.badge-yellow { background:rgba(217,119,6,0.1); color:#d97706; border:1px solid rgba(217,119,6,0.2); }
 
 .card-body { padding:20px; }
 
@@ -254,14 +258,14 @@ body::before {
 .progress-group { display:flex; flex-direction:column; gap:14px; }
 .progress-item { }
 .progress-header { display:flex; justify-content:space-between; margin-bottom:6px; }
-.progress-name { font-size:12px; font-weight:500; color:var(--text2); }
-.progress-val { font-family:var(--font-mono); font-size:12px; color:var(--text); }
-.progress-bar { height:8px; background:rgba(255,255,255,0.05); border-radius:10px; overflow:hidden; }
+.progress-name { font-size:12px; font-weight:500; color:#4a5987; }
+.progress-val { font-family:var(--font-mono); font-size:12px; color:#0f1b3d; }
+.progress-bar { height:8px; background:rgba(44,90,220,0.08); border-radius:10px; overflow:hidden; }
 .progress-fill { height:100%; border-radius:10px; transition:width 1s cubic-bezier(0.4,0,0.2,1); }
-.fill-blue { background:linear-gradient(90deg,var(--accent),var(--accent5)); }
-.fill-green { background:linear-gradient(90deg,var(--accent3),#00b37e); }
-.fill-red { background:linear-gradient(90deg,var(--accent2),#ff9f43); }
-.fill-yellow { background:linear-gradient(90deg,var(--accent4),#f9ca24); }
+.fill-blue { background:linear-gradient(90deg,#2c5adc,#7c3aed); }
+.fill-green { background:linear-gradient(90deg,#0f9e6e,#059669); }
+.fill-red { background:linear-gradient(90deg,#e53e3e,#d97706); }
+.fill-yellow { background:linear-gradient(90deg,#d97706,#f59e0b); }
 
 /* LEGAL INFO BANNER */
 .legal-banner {
@@ -279,27 +283,27 @@ body::before {
   border-radius:8px; padding:8px 14px;
   font-size:12px;
 }
-.legal-pill strong { color:var(--accent3); font-family:var(--font-mono); }
-.legal-pill span { color:var(--text2); }
+.legal-pill strong { color:#0f9e6e; font-family:var(--font-mono); }
+.legal-pill span { color:#4a5987; }
 
 /* ======== FORM / ENTRY ======== */
 .form-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:14px; }
 .form-group { display:flex; flex-direction:column; gap:6px; }
-.form-label { font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:1px; }
+.form-label { font-size:11px; font-weight:600; color:#6b7db3; text-transform:uppercase; letter-spacing:1px; }
 .form-input, .form-select {
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  border-radius:var(--radius2); color:var(--text);
+  background:#f8faff;
+  border:1px solid rgba(44,90,220,0.18);
+  border-radius:var(--radius2); color:#0f1b3d;
   font-family:var(--font); font-size:13.5px;
   padding:10px 14px; outline:none;
   transition:border-color 0.2s, box-shadow 0.2s;
 }
 .form-input:focus, .form-select:focus {
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(99,130,255,0.1);
+  border-color:#2c5adc;
+  box-shadow:0 0 0 3px rgba(44,90,220,0.08);
 }
-.form-select option { background:var(--bg2); color:var(--text); }
-.form-input::placeholder { color:var(--text3); }
+.form-select option { background:#ffffff; color:#0f1b3d; }
+.form-input::placeholder { color:#8896c0; }
 
 /* JOB COLOR DOTS */
 .job-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
@@ -312,17 +316,17 @@ body::before {
   cursor:pointer; transition:all 0.2s; white-space:nowrap;
 }
 .btn-primary {
-  background:linear-gradient(135deg,var(--accent),var(--accent5));
-  color:#fff; box-shadow:0 4px 20px rgba(99,130,255,0.25);
+  background:linear-gradient(135deg,#2c5adc,#7c3aed);
+  color:#fff; box-shadow:0 4px 20px rgba(44,90,220,0.25);
 }
-.btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(99,130,255,0.35); }
+.btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(44,90,220,0.35); }
 .btn-secondary {
-  background:rgba(99,130,255,0.1); color:var(--accent);
-  border:1px solid var(--border2);
+  background:rgba(44,90,220,0.08); color:#2c5adc;
+  border:1px solid rgba(44,90,220,0.22);
 }
-.btn-secondary:hover { background:rgba(99,130,255,0.18); }
-.btn-danger { background:rgba(255,107,107,0.12); color:var(--accent2); border:1px solid rgba(255,107,107,0.2); }
-.btn-danger:hover { background:rgba(255,107,107,0.22); }
+.btn-secondary:hover { background:rgba(44,90,220,0.14); }
+.btn-danger { background:rgba(229,62,62,0.08); color:#e53e3e; border:1px solid rgba(229,62,62,0.2); }
+.btn-danger:hover { background:rgba(229,62,62,0.15); }
 .btn-sm { padding:6px 14px; font-size:12px; border-radius:8px; }
 .btn-icon { padding:8px; border-radius:8px; }
 
@@ -330,39 +334,40 @@ body::before {
 .data-table { width:100%; border-collapse:collapse; font-size:13px; }
 .data-table th {
   padding:10px 14px; text-align:left;
-  font-size:10.5px; font-weight:600; color:var(--text3);
+  font-size:10.5px; font-weight:600; color:#6b7db3;
   text-transform:uppercase; letter-spacing:1px;
-  border-bottom:1px solid var(--border);
-  background:rgba(255,255,255,0.02);
+  border-bottom:1px solid rgba(44,90,220,0.10);
+  background:#f8faff;
 }
 .data-table td {
-  padding:11px 14px; border-bottom:1px solid rgba(255,255,255,0.04);
-  color:var(--text2); vertical-align:middle;
+  padding:11px 14px; border-bottom:1px solid rgba(44,90,220,0.07);
+  color:#4a5987; vertical-align:middle;
 }
-.data-table tr:hover td { background:rgba(99,130,255,0.04); color:var(--text); }
+.data-table tr:hover td { background:rgba(44,90,220,0.04); color:#0f1b3d; }
 .data-table .mono { font-family:var(--font-mono); font-size:12px; }
 .table-wrap { overflow-x:auto; }
 
 /* WARNING INDICATOR */
 .warn-bar {
-  display:flex; align-items:center; gap:10px;
-  background:rgba(255,107,107,0.08);
-  border:1px solid rgba(255,107,107,0.2);
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:rgba(229,62,62,0.06);
+  border:1px solid rgba(229,62,62,0.18);
   border-radius:10px; padding:12px 16px;
-  font-size:13px; color:var(--accent2); margin-bottom:16px;
+  font-size:13px; font-weight:500; color:#e53e3e; margin-bottom:16px;
+  text-align:center;
 }
-.warn-bar.ok { background:rgba(0,229,160,0.06); border-color:rgba(0,229,160,0.2); color:var(--accent3); }
-.warn-bar.yellow { background:rgba(255,209,102,0.06); border-color:rgba(255,209,102,0.2); color:var(--accent4); }
+.warn-bar.ok { background:rgba(15,158,110,0.07); border-color:rgba(15,158,110,0.2); color:#0f9e6e; }
+.warn-bar.yellow { background:rgba(217,119,6,0.07); border-color:rgba(217,119,6,0.2); color:#d97706; }
 
 /* TABS */
-.tab-group { display:flex; gap:4px; background:rgba(255,255,255,0.03); padding:4px; border-radius:10px; margin-bottom:20px; }
+.tab-group { display:flex; gap:4px; background:rgba(44,90,220,0.06); padding:4px; border-radius:10px; margin-bottom:20px; }
 .tab {
   flex:1; padding:8px 12px; border:none; border-radius:8px;
   font-family:var(--font); font-size:13px; font-weight:500;
-  cursor:pointer; transition:all 0.2s; color:var(--text2); background:transparent;
+  cursor:pointer; transition:all 0.2s; color:#4a5987; background:transparent;
   text-align:center;
 }
-.tab.active { background:var(--bg4); color:var(--text); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.tab.active { background:#ffffff; color:#2c5adc; box-shadow:0 2px 8px rgba(44,90,220,0.12); font-weight:600; }
 .tab-content { display:none; }
 .tab-content.active { display:block; }
 
@@ -373,117 +378,118 @@ body::before {
   font-family:var(--font-mono); cursor:pointer; transition:all 0.2s;
   border:1px solid transparent;
 }
-.day-pill.worked { background:rgba(0,229,160,0.12); color:var(--accent3); border-color:rgba(0,229,160,0.25); }
-.day-pill.over { background:rgba(255,107,107,0.12); color:var(--accent2); border-color:rgba(255,107,107,0.25); }
-.day-pill.rest { background:rgba(255,255,255,0.04); color:var(--text3); border-color:var(--border); }
-.day-pill.today { border-color:var(--accent); color:var(--accent); font-weight:700; }
+.day-pill.worked { background:rgba(15,158,110,0.1); color:#0f9e6e; border-color:rgba(15,158,110,0.25); }
+.day-pill.over { background:rgba(229,62,62,0.1); color:#e53e3e; border-color:rgba(229,62,62,0.25); }
+.day-pill.rest { background:rgba(44,90,220,0.04); color:#8896c0; border-color:rgba(44,90,220,0.12); }
+.day-pill.today { border-color:#2c5adc; color:#2c5adc; font-weight:700; background:rgba(44,90,220,0.08); }
 
 /* INCOME BREAKDOWN TABLE */
 .income-row {
   display:flex; justify-content:space-between; align-items:center;
-  padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+  padding:10px 0; border-bottom:1px solid rgba(44,90,220,0.08);
   font-size:13px;
 }
 .income-row:last-child { border-bottom:none; }
-.income-row.total { padding-top:14px; font-weight:700; font-size:15px; color:var(--accent3); }
-.income-row.deduction { color:var(--accent2); }
-.income-label { color:var(--text2); }
+.income-row.total { padding-top:14px; font-weight:700; font-size:15px; color:#0f9e6e; }
+.income-row.deduction { color:#e53e3e; }
+.income-label { color:#4a5987; }
 .income-val { font-family:var(--font-mono); font-size:13px; }
 
 /* MODAL */
 .modal-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+  position:fixed; inset:0; background:rgba(15,27,61,0.45); backdrop-filter:blur(8px);
   z-index:200; display:none; align-items:center; justify-content:center;
 }
 .modal-overlay.open { display:flex; }
 .modal {
-  background:var(--bg2); border:1px solid var(--border2);
+  background:#ffffff; border:1px solid rgba(44,90,220,0.22);
   border-radius:var(--radius); padding:28px; width:90%; max-width:520px;
   max-height:90vh; overflow-y:auto;
   animation:slideUp 0.25s ease;
 }
 @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-.modal-title { font-family:var(--font-display); font-size:20px; font-weight:800; margin-bottom:20px; }
+.modal-title { font-family:var(--font-display); font-size:20px; font-weight:800; margin-bottom:20px; color:#0f1b3d; }
 
 /* TOAST */
 .toast-container { position:fixed; bottom:24px; right:24px; z-index:300; display:flex; flex-direction:column; gap:8px; }
 .toast {
-  background:var(--bg3); border:1px solid var(--border2); border-radius:10px;
+  background:#ffffff; border:1px solid rgba(44,90,220,0.2); border-radius:10px;
   padding:12px 18px; font-size:13px; min-width:220px;
   display:flex; align-items:center; gap:10px;
   animation:toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
-  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  box-shadow:0 8px 32px rgba(44,90,220,0.15);
 }
 @keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
 @keyframes toastOut { to{opacity:0;transform:translateX(20px)} }
-.toast.success { border-color:rgba(0,229,160,0.4); }
-.toast.error { border-color:rgba(255,107,107,0.4); }
+.toast.success { border-color:rgba(15,158,110,0.4); color:#0f9e6e; }
+.toast.error { border-color:rgba(229,62,62,0.4); color:#e53e3e; }
 
 /* YEAR HEATMAP */
 .heatmap-wrap { padding:16px 20px; overflow-x:auto; }
 .heatmap-grid { display:flex; gap:3px; flex-wrap:wrap; }
 .heat-cell {
   width:12px; height:12px; border-radius:2px;
-  background:rgba(255,255,255,0.04);
+  background:rgba(44,90,220,0.06);
   transition:all 0.15s; cursor:pointer;
   position:relative;
 }
 .heat-cell:hover::after {
   content:attr(data-tip);
   position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
-  background:var(--bg4); color:var(--text); font-size:11px;
+  background:#ffffff; color:#0f1b3d; font-size:11px;
   padding:4px 8px; border-radius:6px; white-space:nowrap;
-  border:1px solid var(--border); z-index:10; pointer-events:none;
+  border:1px solid rgba(44,90,220,0.2); z-index:10; pointer-events:none;
+  box-shadow:0 2px 8px rgba(44,90,220,0.1);
 }
-.heat-0 { background:rgba(255,255,255,0.04); }
-.heat-1 { background:rgba(0,229,160,0.2); }
-.heat-2 { background:rgba(0,229,160,0.4); }
-.heat-3 { background:rgba(0,229,160,0.65); }
-.heat-4 { background:#00e5a0; }
-.heat-over { background:var(--accent2); }
+.heat-0 { background:rgba(44,90,220,0.06); }
+.heat-1 { background:rgba(44,90,220,0.2); }
+.heat-2 { background:rgba(44,90,220,0.4); }
+.heat-3 { background:rgba(44,90,220,0.65); }
+.heat-4 { background:#2c5adc; }
+.heat-over { background:#e53e3e; }
 
 /* JOB CARDS */
 .job-cards { display:flex; flex-direction:column; gap:12px; }
 .job-card {
-  background:rgba(255,255,255,0.02);
-  border:1px solid var(--border); border-radius:12px;
+  background:#f8faff;
+  border:1px solid rgba(44,90,220,0.10); border-radius:12px;
   padding:16px; display:flex; gap:14px; align-items:center;
   transition:all 0.2s;
 }
-.job-card:hover { border-color:var(--border2); background:rgba(255,255,255,0.04); }
+.job-card:hover { border-color:rgba(44,90,220,0.25); background:#ffffff; box-shadow:0 4px 16px rgba(44,90,220,0.08); }
 .job-color-strip { width:4px; border-radius:4px; align-self:stretch; flex-shrink:0; }
 .job-info { flex:1; }
-.job-name { font-size:14px; font-weight:600; color:var(--text); }
-.job-meta { font-size:12px; color:var(--text3); margin-top:3px; }
-.job-wage { font-family:var(--font-mono); font-size:18px; font-weight:700; color:var(--accent4); }
+.job-name { font-size:14px; font-weight:600; color:#0f1b3d; }
+.job-meta { font-size:12px; color:#8896c0; margin-top:3px; }
+.job-wage { font-family:var(--font-mono); font-size:18px; font-weight:700; color:#d97706; }
 .job-type-badge { font-size:10px; padding:2px 8px; border-radius:10px; font-weight:600; }
 
 /* WEEK SELECTOR */
 .week-nav {
   display:flex; align-items:center; gap:12px;
-  background:rgba(255,255,255,0.03); padding:8px 14px; border-radius:10px;
-  border:1px solid var(--border);
+  background:#f8faff; padding:8px 14px; border-radius:10px;
+  border:1px solid rgba(44,90,220,0.14);
 }
-.week-nav button { background:none; border:none; cursor:pointer; color:var(--text2); font-size:18px; transition:color 0.2s; }
-.week-nav button:hover { color:var(--text); }
-.week-label { font-family:var(--font-mono); font-size:13px; color:var(--text); min-width:160px; text-align:center; }
+.week-nav button { background:none; border:none; cursor:pointer; color:#4a5987; font-size:18px; transition:color 0.2s; }
+.week-nav button:hover { color:#2c5adc; }
+.week-label { font-family:var(--font-mono); font-size:13px; color:#0f1b3d; min-width:160px; text-align:center; }
 
 /* SCROLLBAR */
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:10px; }
-::-webkit-scrollbar-thumb:hover { background:var(--text3); }
+::-webkit-scrollbar-thumb { background:#dce5ff; border-radius:10px; }
+::-webkit-scrollbar-thumb:hover { background:#8896c0; }
 
 /* SECTION HEADING */
 .section-title {
   font-family:var(--font-display); font-size:13px; font-weight:800;
-  color:var(--text3); text-transform:uppercase; letter-spacing:2px;
+  color:#8896c0; text-transform:uppercase; letter-spacing:2px;
   margin-bottom:16px; display:flex; align-items:center; gap:8px;
 }
-.section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+.section-title::after { content:''; flex:1; height:1px; background:rgba(44,90,220,0.12); }
 
 /* Divider */
-.divider { height:1px; background:var(--border); margin:20px 0; }
+.divider { height:1px; background:rgba(44,90,220,0.10); margin:20px 0; }
 
 /* responsive */
 @media(max-width:768px){
@@ -640,7 +646,7 @@ body::before {
         <span class="card-badge badge-yellow" id="currentYear"></span>
       </div>
       <div class="heatmap-wrap" id="heatmapContainer"></div>
-      <div style="display:flex;gap:8px;align-items:center;padding:0 20px 14px;font-size:11px;color:var(--text3);">
+      <div style="display:flex;gap:8px;align-items:center;padding:0 20px 14px;font-size:11px;color:#8896c0;">
         <span>Less</span>
         <div class="heat-cell heat-0" style="position:static;"></div>
         <div class="heat-cell heat-1" style="position:static;"></div>
@@ -795,7 +801,7 @@ body::before {
               <button class="btn btn-secondary btn-sm" onclick="toggleBulkDelete()">✕ Cancel</button>
             </div>
           </div>
-          <div id="bulkPreviewResult" style="margin-top:12px;font-size:13px;color:var(--text2);"></div>
+          <div id="bulkPreviewResult" style="margin-top:12px;font-size:13px;color:#4a5987;"></div>
         </div>
       </div>
     </div>
@@ -993,7 +999,7 @@ body::before {
 
         <div class="divider"></div>
         <div class="section-title">Data & Drive</div>
-        <div id="driveStatus" style="font-size:13px;color:var(--text2);margin-bottom:12px;">Not connected to Google Drive</div>
+        <div id="driveStatus" style="font-size:13px;color:#4a5987;margin-bottom:12px;">Not connected to Google Drive</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn btn-secondary btn-sm" onclick="handleGoogleAuth()">🔗 Connect Google Drive</button>
           <button class="btn btn-secondary btn-sm" onclick="exportToExcel()">📥 Export Excel Backup</button>
@@ -1391,10 +1397,10 @@ function previewBulkDelete() {
   const totalHrs = targets.reduce((s,e)=>s+(e.hours||0),0);
   const el = document.getElementById('bulkPreviewResult');
   if (!targets.length) {
-    el.innerHTML = '<span style="color:var(--text3);">No entries match the selected filters.</span>';
+    el.innerHTML = '<span style="color:#8896c0;">No entries match the selected filters.</span>';
     return;
   }
-  el.innerHTML = `<span style="color:var(--accent2);">⚠️ <strong>${targets.length} entries</strong> will be deleted (${totalHrs.toFixed(1)} hrs total). Click <strong>Delete Selected</strong> to confirm.</span>`;
+  el.innerHTML = `<span style="color:#e53e3e;">⚠️ <strong>${targets.length} entries</strong> will be deleted (${totalHrs.toFixed(1)} hrs total). Click <strong>Delete Selected</strong> to confirm.</span>`;
 }
 
 function executeBulkDelete() {
@@ -1412,7 +1418,7 @@ function renderJobCards() {
   const el = document.getElementById('jobCards');
   if (!el) return;
   if (!db.jobs.length) {
-    el.innerHTML = `<div style="text-align:center;padding:48px;color:var(--text3);">No jobs yet. Add your first job above.</div>`;
+    el.innerHTML = `<div style="text-align:center;padding:48px;color:#8896c0;">No jobs yet. Add your first job above.</div>`;
     return;
   }
   el.innerHTML = db.jobs.map((j,i) => {
@@ -1427,7 +1433,7 @@ function renderJobCards() {
         <div class="job-meta">${j.startDate ? 'Since '+j.startDate : ''} ${j.notes ? '· '+j.notes : ''}</div>
         <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
           <span class="card-badge ${typeColors[j.type]||'badge-blue'} job-type-badge">${typeLabels[j.type]||j.type}</span>
-          <span style="font-size:12px;color:var(--text3);">YTD: ${ytdHours.toFixed(1)} hrs · €${ytdEarnings.toFixed(0)} gross</span>
+          <span style="font-size:12px;color:#8896c0;">YTD: ${ytdHours.toFixed(1)} hrs · €${ytdEarnings.toFixed(0)} gross</span>
         </div>
       </div>
       <div style="text-align:right;">
@@ -1512,6 +1518,7 @@ function saveEntry() {
   db.entries.push(entry);
   db.entries.sort((a,b) => a.date.localeCompare(b.date));
   saveDB(); renderAll();
+  syncEntryToDrive(entry);
   toast(`✅ Logged ${hours.toFixed(2)} hrs for ${new Date(date+'T00:00').toDateString()}`, 'success');
 }
 
@@ -1571,11 +1578,11 @@ function destroyChart(id) {
 }
 
 const chartDefaults = {
-  color: 'rgba(232,234,246,0.7)',
+  color: 'rgba(15,27,61,0.75)',
   plugins: { legend: { labels: { color:'rgba(232,234,246,0.7)', font:{size:11} } } },
   scales: {
-    x: { ticks:{color:'rgba(136,146,176,0.8)',font:{size:11}}, grid:{color:'rgba(255,255,255,0.04)'} },
-    y: { ticks:{color:'rgba(136,146,176,0.8)',font:{size:11}}, grid:{color:'rgba(255,255,255,0.05)'} }
+    x: { ticks:{color:'rgba(74,89,135,0.8)',font:{size:11}}, grid:{color:'rgba(44,90,220,0.07)'} },
+    y: { ticks:{color:'rgba(74,89,135,0.8)',font:{size:11}}, grid:{color:'rgba(44,90,220,0.08)'} }
   }
 };
 
@@ -1584,7 +1591,7 @@ function mkChart(id, config) {
   const canvas = document.getElementById(id);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  Chart.defaults.color = 'rgba(232,234,246,0.7)';
+  Chart.defaults.color = 'rgba(15,27,61,0.7)';
   chartInstances[id] = new Chart(ctx, config);
   return chartInstances[id];
 }
@@ -1669,9 +1676,9 @@ function renderDashboard() {
     type:'bar',
     data:{ labels:weekLabels, datasets:[
       { label:'Hours Worked', data:weekData, backgroundColor:weekBarColors, borderRadius:6, borderSkipped:false },
-      { label:'Daily Limit (8h)', data:Array(7).fill(8), type:'line', borderColor:'rgba(255,209,102,0.4)', borderDash:[4,4], pointRadius:0, borderWidth:1.5, fill:false }
+      { label:'Daily Limit (8h)', data:Array(7).fill(8), type:'line', borderColor:'rgba(217,119,6,0.4)', borderDash:[4,4], pointRadius:0, borderWidth:1.5, fill:false }
     ]},
-    options:{ ...chartDefaults, plugins:{ legend:{ labels:{color:'rgba(232,234,246,0.6)',font:{size:11}}}, tooltip:{mode:'index'} }, scales:{
+    options:{ ...chartDefaults, plugins:{ legend:{ labels:{color:'rgba(15,27,61,0.65)',font:{size:11}}}, tooltip:{mode:'index'} }, scales:{
       x:{...chartDefaults.scales.x},
       y:{...chartDefaults.scales.y, max:Math.max(10, ...weekData)+2, min:0}
     }, animation:{ duration:600 }}
@@ -1683,10 +1690,10 @@ function renderDashboard() {
   mkChart('monthlyLineChart', {
     type:'line',
     data:{ labels:months, datasets:[
-      { label:'Hours', data:monthlyHours, borderColor:'var(--accent3)', backgroundColor:'rgba(0,229,160,0.07)', fill:true, tension:0.4, pointBackgroundColor:'var(--accent3)', pointRadius:4 },
-      { label:'Avg 80h/mo', data:Array(12).fill(80), borderColor:'rgba(255,209,102,0.35)', borderDash:[4,4], pointRadius:0, borderWidth:1.5, fill:false }
+      { label:'Hours', data:monthlyHours, borderColor:'#0f9e6e', backgroundColor:'rgba(44,90,220,0.06)', fill:true, tension:0.4, pointBackgroundColor:'#0f9e6e', pointRadius:4 },
+      { label:'Avg 80h/mo', data:Array(12).fill(80), borderColor:'rgba(217,119,6,0.4)', borderDash:[4,4], pointRadius:0, borderWidth:1.5, fill:false }
     ]},
-    options:{ ...chartDefaults, plugins:{legend:{labels:{color:'rgba(232,234,246,0.6)',font:{size:11}}}}, scales:{
+    options:{ ...chartDefaults, plugins:{legend:{labels:{color:'rgba(15,27,61,0.65)',font:{size:11}}}}, scales:{
       x:{...chartDefaults.scales.x},
       y:{...chartDefaults.scales.y, min:0}
     }}
@@ -1699,10 +1706,10 @@ function renderDashboard() {
     type:'doughnut',
     data:{ labels:['Full Days Used','Half Days (×0.5)','Remaining'], datasets:[{
       data:[dayStats.fullDays, dayStats.halfDays*0.5, dayLeft],
-      backgroundColor:['rgba(99,130,255,0.8)','rgba(199,125,255,0.6)','rgba(0,229,160,0.3)'],
-      borderColor:['#6382ff','#c77dff','#00e5a0'], borderWidth:2, hoverOffset:8
+      backgroundColor:['rgba(44,90,220,0.75)','rgba(124,58,237,0.6)','rgba(15,158,110,0.35)'],
+      borderColor:['#2c5adc','#7c3aed','#0f9e6e'], borderWidth:2, hoverOffset:8
     }]},
-    options:{ cutout:'65%', plugins:{ legend:{ position:'bottom', labels:{color:'rgba(232,234,246,0.7)',font:{size:10},padding:8}}}, animation:{duration:800}}
+    options:{ cutout:'65%', plugins:{ legend:{ position:'bottom', labels:{color:'rgba(15,27,61,0.65)',font:{size:10},padding:8}}}, animation:{duration:800}}
   });
   const dbBarsEl = document.getElementById('dayBudgetBars');
   if(dbBarsEl) {
@@ -1726,11 +1733,11 @@ function renderDashboard() {
     type:'pie',
     data:{ labels:db.jobs.map(j=>j.name)||['No jobs'], datasets:[{
       data: db.jobs.length ? jobHours : [1],
-      backgroundColor: db.jobs.length ? db.jobs.map(j=>j.color+'cc') : ['rgba(255,255,255,0.1)'],
-      borderColor: db.jobs.length ? db.jobs.map(j=>j.color) : ['rgba(255,255,255,0.2)'],
+      backgroundColor: db.jobs.length ? db.jobs.map(j=>j.color+'bb') : ['rgba(44,90,220,0.15)'],
+      borderColor: db.jobs.length ? db.jobs.map(j=>j.color) : ['rgba(44,90,220,0.3)'],
       borderWidth:2, hoverOffset:8
     }]},
-    options:{ plugins:{ legend:{position:'bottom',labels:{color:'rgba(232,234,246,0.7)',font:{size:10},padding:6}} }, animation:{duration:700} }
+    options:{ plugins:{ legend:{position:'bottom',labels:{color:'rgba(15,27,61,0.65)',font:{size:10},padding:6}} }, animation:{duration:700} }
   });
 
   // Earnings snapshot
@@ -1740,9 +1747,9 @@ function renderDashboard() {
       .filter(e=>{ const j=getJob(e.jobId); return j&&j.type==='minijob' && new Date(e.date+'T00:00').getMonth()===month && new Date(e.date+'T00:00').getFullYear()===year; })
       .reduce((s,e)=>s+calcEntryEarnings(e).gross,0);
     esEl.innerHTML = `
-      <div class="income-row"><span class="income-label">Gross Earned</span><span class="income-val" style="color:var(--accent3)">€${monthEarnings.gross.toFixed(2)}</span></div>
+      <div class="income-row"><span class="income-label">Gross Earned</span><span class="income-val" style="color:#0f9e6e">€${monthEarnings.gross.toFixed(2)}</span></div>
       <div class="income-row deduction"><span class="income-label">Pension (Werkstudent 9.3%)</span><span class="income-val">−€${monthEarnings.pension.toFixed(2)}</span></div>
-      <div class="income-row"><span class="income-label">Minijob portion (tax-free)</span><span class="income-val" style="color:var(--accent3)">€${minijobTotal.toFixed(2)}</span></div>
+      <div class="income-row"><span class="income-label">Minijob portion (tax-free)</span><span class="income-val" style="color:#0f9e6e">€${minijobTotal.toFixed(2)}</span></div>
       <div class="income-row"><span class="income-label">Minijob cap remaining</span><span class="income-val">${Math.max(0,MINIJOB_CAP-minijobTotal).toFixed(2)} of €538</span></div>
       <div class="income-row total"><span class="income-label">Estimated Net</span><span class="income-val">€${monthEarnings.net.toFixed(2)}</span></div>
     `;
@@ -1804,7 +1811,7 @@ function renderWeekDetail() {
   const dateStrs = days.map(toDateStr);
   const weekEntries = db.entries.filter(e => dateStrs.includes(e.date));
   if (!weekEntries.length) {
-    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:24px;">No entries for this week. <a href="#" onclick="showPage('log',null)" style="color:var(--accent);">Log hours →</a></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:#8896c0;padding:24px;">No entries for this week. <a href="#" onclick="showPage('log',null)" style="color:#2c5adc;">Log hours →</a></td></tr>`;
     return;
   }
   tbody.innerHTML = weekEntries.map(e => {
@@ -1820,7 +1827,7 @@ function renderWeekDetail() {
       <td class="mono">${e.end}</td>
       <td class="mono" style="color:${e.hours>8?'var(--accent2)':e.hours>4?'var(--accent3)':'var(--text)'}"><strong>${e.hours.toFixed(2)}</strong></td>
       <td><span class="card-badge ${job?.type==='minijob'?'badge-green':job?.type==='werkstudent'?'badge-blue':'badge-yellow'}" style="font-size:10px;">${typeLabel}</span></td>
-      <td class="mono" style="color:var(--accent3)">€${earn.gross.toFixed(2)}</td>
+      <td class="mono" style="color:#0f9e6e">€${earn.gross.toFixed(2)}</td>
       <td><button class="btn btn-secondary btn-sm btn-icon" onclick="openEditModal('${e.id}')">✏️</button> <button class="btn btn-danger btn-sm btn-icon" onclick="deleteEntry('${e.id}')">🗑</button></td>
     </tr>`;
   }).join('');
@@ -1856,7 +1863,7 @@ function renderHistory() {
   if (filterJob) filtered = filtered.filter(e => e.jobId === filterJob);
   if (count) count.textContent = `${filtered.length} entr${filtered.length===1?'y':'ies'}`;
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;color:var(--text3);padding:32px;">No entries found.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;color:#8896c0;padding:32px;">No entries found.</td></tr>`;
     return;
   }
   tbody.innerHTML = filtered.map(e => {
@@ -1871,11 +1878,11 @@ function renderHistory() {
       <td class="mono">${e.start}</td>
       <td class="mono">${e.end}</td>
       <td class="mono">${e.break||0}m</td>
-      <td class="mono" style="color:var(--accent3)"><strong>${e.hours.toFixed(2)}</strong></td>
+      <td class="mono" style="color:#0f9e6e"><strong>${e.hours.toFixed(2)}</strong></td>
       <td><span class="card-badge ${job?.type==='minijob'?'badge-green':job?.type==='werkstudent'?'badge-blue':'badge-yellow'}" style="font-size:10px;">${typeLabel}</span></td>
       <td class="mono">€${earn.gross.toFixed(2)}</td>
       <td class="mono">€${earn.net.toFixed(2)}</td>
-      <td style="color:var(--text3);font-size:12px;">${e.notes||'—'}</td>
+      <td style="color:#8896c0;font-size:12px;">${e.notes||'—'}</td>
       <td>
         <button class="btn btn-secondary btn-sm btn-icon" onclick="openEditModal('${e.id}')">✏️</button>
         <button class="btn btn-danger btn-sm btn-icon" onclick="deleteEntry('${e.id}')">🗑</button>
@@ -1897,16 +1904,16 @@ function renderAnalytics() {
   const weekHoursArr = Array.from({length:8},(_,i)=>getHoursForWeek(i-7));
   mkChart('analyticsWeeklyBar', {
     type:'bar',
-    data:{ labels:weekLabels, datasets:[{ label:'Hours', data:weekHoursArr, backgroundColor:weekHoursArr.map(h=>h>WEEKLY_HOUR_LIMIT?'rgba(255,107,107,0.7)':'rgba(99,130,255,0.65)'), borderRadius:6 }]},
+    data:{ labels:weekLabels, datasets:[{ label:'Hours', data:weekHoursArr, backgroundColor:weekHoursArr.map(h=>h>WEEKLY_HOUR_LIMIT?'rgba(229,62,62,0.7)':'rgba(44,90,220,0.65)'), borderRadius:6 }]},
     options:{ ...chartDefaults, plugins:{legend:{display:false}}, scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0,max:Math.max(25,...weekHoursArr)+2}} }
   });
   mkChart('analyticsWeeklyLimit', {
     type:'bar',
     data:{ labels:weekLabels, datasets:[
-      { label:'Hours Worked', data:weekHoursArr, backgroundColor:'rgba(0,229,160,0.6)', borderRadius:6, yAxisID:'y' },
-      { label:'20hr Limit', data:Array(8).fill(WEEKLY_HOUR_LIMIT), type:'line', borderColor:'rgba(255,107,107,0.7)', borderDash:[4,4], pointRadius:0, fill:false, yAxisID:'y' }
+      { label:'Hours Worked', data:weekHoursArr, backgroundColor:'rgba(15,158,110,0.65)', borderRadius:6, yAxisID:'y' },
+      { label:'20hr Limit', data:Array(8).fill(WEEKLY_HOUR_LIMIT), type:'line', borderColor:'rgba(229,62,62,0.7)', borderDash:[4,4], pointRadius:0, fill:false, yAxisID:'y' }
     ]},
-    options:{ ...chartDefaults, scales:{ x:{...chartDefaults.scales.x}, y:{...chartDefaults.scales.y,min:0,max:25} }, plugins:{legend:{labels:{color:'rgba(232,234,246,0.6)',font:{size:11}}}} }
+    options:{ ...chartDefaults, scales:{ x:{...chartDefaults.scales.x}, y:{...chartDefaults.scales.y,min:0,max:25} }, plugins:{legend:{labels:{color:'rgba(15,27,61,0.65)',font:{size:11}}}} }
   });
 
   // Monthly
@@ -1914,12 +1921,12 @@ function renderAnalytics() {
   const monthlyEarns = months.map((_,m)=>getMonthEarnings(year,m).gross);
   mkChart('analyticsMonthlyBar',{
     type:'bar',
-    data:{labels:months,datasets:[{label:'Hours',data:monthlyHours,backgroundColor:'rgba(99,130,255,0.65)',borderRadius:6}]},
+    data:{labels:months,datasets:[{label:'Hours',data:monthlyHours,backgroundColor:'rgba(44,90,220,0.65)',borderRadius:6}]},
     options:{...chartDefaults,plugins:{legend:{display:false}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
   mkChart('analyticsMonthlyEarnings',{
     type:'bar',
-    data:{labels:months,datasets:[{label:'Gross €',data:monthlyEarns,backgroundColor:'rgba(0,229,160,0.55)',borderRadius:6}]},
+    data:{labels:months,datasets:[{label:'Gross €',data:monthlyEarns,backgroundColor:'rgba(15,158,110,0.55)',borderRadius:6}]},
     options:{...chartDefaults,plugins:{legend:{display:false}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
 
@@ -1929,12 +1936,12 @@ function renderAnalytics() {
   const cumEarns=months.map((_,m)=>{cumE+=getMonthEarnings(year,m).gross;return cumE;});
   mkChart('analyticsCumulative',{
     type:'line',
-    data:{labels:months,datasets:[{label:'Cumulative Hours',data:cumHours,borderColor:'var(--accent)',backgroundColor:'rgba(99,130,255,0.07)',fill:true,tension:0.4,pointRadius:4}]},
+    data:{labels:months,datasets:[{label:'Cumulative Hours',data:cumHours,borderColor:'#2c5adc',backgroundColor:'rgba(44,90,220,0.06)',fill:true,tension:0.4,pointRadius:4}]},
     options:{...chartDefaults,plugins:{legend:{display:false}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
   mkChart('analyticsCumulativeEarnings',{
     type:'line',
-    data:{labels:months,datasets:[{label:'Cumulative Gross €',data:cumEarns,borderColor:'var(--accent3)',backgroundColor:'rgba(0,229,160,0.07)',fill:true,tension:0.4,pointRadius:4}]},
+    data:{labels:months,datasets:[{label:'Cumulative Gross €',data:cumEarns,borderColor:'#0f9e6e',backgroundColor:'rgba(44,90,220,0.06)',fill:true,tension:0.4,pointRadius:4}]},
     options:{...chartDefaults,plugins:{legend:{display:false}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
 
@@ -1968,7 +1975,7 @@ function renderAnalytics() {
         const byDate={};mEntries.forEach(e=>{byDate[e.date]=(byDate[e.date]||0)+(e.hours||0);});
         return Object.values(byDate).reduce((s,h)=>s+(h>4?1:h>0?0.5:0),0);
       }),
-      backgroundColor:'rgba(99,130,255,0.6)',borderRadius:6
+      backgroundColor:'rgba(44,90,220,0.6)',borderRadius:6
     }]},
     options:{...chartDefaults,plugins:{legend:{display:false}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
@@ -1976,10 +1983,10 @@ function renderAnalytics() {
   mkChart('complianceByWeek',{
     type:'bar',
     data:{labels:Array.from({length:12},(_,i)=>`W-${11-i}`).reverse(),datasets:[
-      {label:'Hours',data:weekCompData,backgroundColor:weekCompData.map(h=>h>WEEKLY_HOUR_LIMIT?'rgba(255,107,107,0.75)':'rgba(0,229,160,0.55)'),borderRadius:5},
-      {label:'20hr Limit',data:Array(12).fill(20),type:'line',borderColor:'rgba(255,209,102,0.6)',borderDash:[4,4],pointRadius:0,fill:false}
+      {label:'Hours',data:weekCompData,backgroundColor:weekCompData.map(h=>h>WEEKLY_HOUR_LIMIT?'rgba(229,62,62,0.75)':'rgba(44,90,220,0.55)'),borderRadius:5},
+      {label:'20hr Limit',data:Array(12).fill(20),type:'line',borderColor:'rgba(217,119,6,0.55)',borderDash:[4,4],pointRadius:0,fill:false}
     ]},
-    options:{...chartDefaults,scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0,max:25}},plugins:{legend:{labels:{color:'rgba(232,234,246,0.6)',font:{size:11}}}}}
+    options:{...chartDefaults,scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0,max:25}},plugins:{legend:{labels:{color:'rgba(15,27,61,0.65)',font:{size:11}}}}}
   });
 }
 
@@ -2000,9 +2007,9 @@ function renderEarnings() {
     const dayHours = dayEntries.reduce((s,e)=>s+(e.hours||0),0);
     dayGrid.innerHTML = `
       <div class="card"><div class="card-header"><span class="card-title">📅 ${dayDate} Breakdown</span></div><div class="card-body">
-        ${!dayEntries.length ? `<div style="color:var(--text3);text-align:center;padding:24px;">No entries for this day.</div>` : `
+        ${!dayEntries.length ? `<div style="color:#8896c0;text-align:center;padding:24px;">No entries for this day.</div>` : `
           <div class="income-row"><span class="income-label">Hours Worked</span><span class="income-val">${dayHours.toFixed(2)} hrs</span></div>
-          <div class="income-row"><span class="income-label">Gross Earnings</span><span class="income-val" style="color:var(--accent3)">€${dayEarn.gross.toFixed(2)}</span></div>
+          <div class="income-row"><span class="income-label">Gross Earnings</span><span class="income-val" style="color:#0f9e6e">€${dayEarn.gross.toFixed(2)}</span></div>
           <div class="income-row deduction"><span class="income-label">Pension (if Werkstudent)</span><span class="income-val">−€${dayEarn.pension.toFixed(2)}</span></div>
           <div class="income-row total"><span class="income-label">Estimated Net</span><span class="income-val">€${dayEarn.net.toFixed(2)}</span></div>
           <div class="divider"></div>
@@ -2013,7 +2020,7 @@ function renderEarnings() {
         <div style="text-align:center;padding:16px;">
           <div style="font-size:48px;margin-bottom:12px;">${dayHours===0?'😴':dayHours<=4?'⚡':'🔥'}</div>
           <div style="font-family:var(--font-display);font-size:22px;font-weight:800;color:${dayHours>4?'var(--accent3)':'var(--accent4)'};">${dayHours===0?'Rest Day':dayHours<=4?'Half Day (≤4h)':'Full Day (>4h)'}</div>
-          <div style="color:var(--text3);margin-top:8px;font-size:13px;">${dayHours<=4&&dayHours>0?'Counts as ½ day in your 280 half-day budget':''}${dayHours>4?'Counts as 1 full day in your 140 full-day budget':''}</div>
+          <div style="color:#8896c0;margin-top:8px;font-size:13px;">${dayHours<=4&&dayHours>0?'Counts as ½ day in your 280 half-day budget':''}${dayHours>4?'Counts as 1 full day in your 140 full-day budget':''}</div>
         </div>
       </div></div>
     `;
@@ -2029,7 +2036,7 @@ function renderEarnings() {
     weekGrid.innerHTML = `
       <div class="card"><div class="card-header"><span class="card-title">📆 ${getWeekLabel(viewWeekOffset)}</span></div><div class="card-body">
         <div class="income-row"><span class="income-label">Total Hours</span><span class="income-val">${weekH.toFixed(2)} / 20 hrs</span></div>
-        <div class="income-row"><span class="income-label">Gross Earnings</span><span class="income-val" style="color:var(--accent3)">€${weekEarn.gross.toFixed(2)}</span></div>
+        <div class="income-row"><span class="income-label">Gross Earnings</span><span class="income-val" style="color:#0f9e6e">€${weekEarn.gross.toFixed(2)}</span></div>
         <div class="income-row deduction"><span class="income-label">Pension Deductions</span><span class="income-val">−€${weekEarn.pension.toFixed(2)}</span></div>
         <div class="income-row total"><span class="income-label">Estimated Net</span><span class="income-val">€${weekEarn.net.toFixed(2)}</span></div>
       </div></div>
@@ -2039,7 +2046,7 @@ function renderEarnings() {
           const jh=je.reduce((s,e)=>s+(e.hours||0),0);
           const jEarn=getEarningsSummary(je);
           return `<div class="income-row"><span class="income-label" style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:${j.color}"></span>${j.name}</span><span class="income-val">${jh.toFixed(1)}h · €${jEarn.gross.toFixed(2)}</span></div>`;
-        }).join('')||'<div style="color:var(--text3);">No jobs set up yet.</div>'}
+        }).join('')||'<div style="color:#8896c0;">No jobs set up yet.</div>'}
       </div></div>
     `;
   }
@@ -2056,13 +2063,13 @@ function renderEarnings() {
     mGrid.innerHTML = `
       <div class="card"><div class="card-header"><span class="card-title">💶 ${months[monthIdx]} Earnings</span></div><div class="card-body">
         <div class="income-row"><span class="income-label">Total Hours</span><span class="income-val">${mHours.toFixed(2)} hrs</span></div>
-        <div class="income-row"><span class="income-label">Minijob Gross (tax-free)</span><span class="income-val" style="color:var(--accent3)">€${minijobEarn.toFixed(2)}</span></div>
+        <div class="income-row"><span class="income-label">Minijob Gross (tax-free)</span><span class="income-val" style="color:#0f9e6e">€${minijobEarn.toFixed(2)}</span></div>
         <div class="income-row"><span class="income-label">Werkstudent Gross</span><span class="income-val">€${werkEarn.toFixed(2)}</span></div>
         <div class="income-row deduction"><span class="income-label">Pension (9.3% of Werkstudent)</span><span class="income-val">−€${mEarn.pension.toFixed(2)}</span></div>
         <div class="income-row"><span class="income-label">Total Gross</span><span class="income-val">€${mEarn.gross.toFixed(2)}</span></div>
         <div class="income-row total"><span class="income-label">Estimated Net</span><span class="income-val">€${mEarn.net.toFixed(2)}</span></div>
         <div class="divider"></div>
-        <div style="font-size:12px;color:var(--text3);">💡 Minijob cap: €538/month. If you exceed this, the Minijob classification changes. Annual tax-free threshold (2026): €12,348. File Steuererklärung to reclaim overpaid tax.</div>
+        <div style="font-size:12px;color:#8896c0;">💡 Minijob cap: €538/month. If you exceed this, the Minijob classification changes. Annual tax-free threshold (2026): €12,348. File Steuererklärung to reclaim overpaid tax.</div>
       </div></div>
       <div class="card"><div class="card-header"><span class="card-title">📋 Minijob Status</span></div><div class="card-body">
         <div style="margin-bottom:12px;">
@@ -2082,14 +2089,14 @@ function renderEarnings() {
   mkChart('earningsGrossNetChart',{
     type:'bar',
     data:{labels:shortMonths,datasets:[
-      {label:'Gross €',data:monthlyGross,backgroundColor:'rgba(99,130,255,0.65)',borderRadius:5},
-      {label:'Net €',data:monthlyNet,backgroundColor:'rgba(0,229,160,0.55)',borderRadius:5}
+      {label:'Gross €',data:monthlyGross,backgroundColor:'rgba(44,90,220,0.65)',borderRadius:5},
+      {label:'Net €',data:monthlyNet,backgroundColor:'rgba(15,158,110,0.55)',borderRadius:5}
     ]},
-    options:{...chartDefaults,plugins:{legend:{labels:{color:'rgba(232,234,246,0.65)',font:{size:11}}}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
+    options:{...chartDefaults,plugins:{legend:{labels:{color:'rgba(15,27,61,0.65)',font:{size:11}}}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
   mkChart('earningsDeductionsChart',{
     type:'bar',
-    data:{labels:shortMonths,datasets:[{label:'Pension Deduction €',data:monthlyPension,backgroundColor:'rgba(255,107,107,0.6)',borderRadius:5}]},
+    data:{labels:shortMonths,datasets:[{label:'Pension Deduction €',data:monthlyPension,backgroundColor:'rgba(229,62,62,0.6)',borderRadius:5}]},
     options:{...chartDefaults,plugins:{legend:{display:false}},scales:{x:{...chartDefaults.scales.x},y:{...chartDefaults.scales.y,min:0}}}
   });
   const ytdGross=monthlyGross.reduce((a,b)=>a+b,0);
@@ -2127,8 +2134,8 @@ function renderLogPage() {
         const ds=toDateStr(d); const h=getHoursForDateStr(ds);
         const isToday=ds===toDateStr(new Date());
         return `<div style="background:${isToday?'rgba(99,130,255,0.15)':'rgba(255,255,255,0.03)'};border:1px solid ${isToday?'var(--accent)':'var(--border)'};border-radius:10px;padding:10px 14px;min-width:80px;text-align:center;">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">${dayNames[i]}</div>
-          <div style="font-size:12px;color:var(--text2);">${d.getDate()}</div>
+          <div style="font-size:11px;color:#8896c0;margin-bottom:4px;">${dayNames[i]}</div>
+          <div style="font-size:12px;color:#4a5987;">${d.getDate()}</div>
           <div style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-top:4px;color:${h>0?'var(--accent3)':'var(--text3)'};">${h>0?h.toFixed(1)+'h':'—'}</div>
         </div>`;
       }).join('')}
@@ -2176,22 +2183,96 @@ function updateSidebarProfile() {
 // ============================================================
 // GOOGLE AUTH (OAuth Simulation + actual Google Sheets API call)
 // ============================================================
+// GOOGLE OAUTH + DRIVE SYNC
+// ============================================================
+// ▶ TO ACTIVATE: Replace YOUR_CLIENT_ID_HERE with your real
+//   Google OAuth Client ID from console.cloud.google.com
+//   Authorized origin to add: https://shabdesh-patil.github.io
+//   Authorized redirect URI:  https://shabdesh-patil.github.io/studentrack/
+const GOOGLE_CLIENT_ID = 'YOUR_CLIENT_ID_HERE';
+const SCOPES = 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
 let googleUser = null;
+let accessToken = null;
+let spreadsheetId = null;
+
 function handleGoogleAuth() {
   const btn = document.getElementById('googleBtn');
+  if (GOOGLE_CLIENT_ID === 'YOUR_CLIENT_ID_HERE') {
+    toast('Google Drive: paste your CLIENT_ID in the code first (see Profile → Data & Drive)', 'error');
+    return;
+  }
   if (googleUser) {
     if (confirm('Sign out from Google?')) {
-      googleUser = null;
+      googleUser = null; accessToken = null; spreadsheetId = null;
       btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Sign in with Google`;
       btn.classList.remove('signed-in');
-      document.getElementById('driveStatus').textContent = 'Not connected to Google Drive';
+      const ds = document.getElementById('driveStatus');
+      if (ds) ds.textContent = 'Not connected to Google Drive';
       toast('Signed out','success');
     }
     return;
   }
-  // Show Google OAuth info modal
-  const info = `To connect Google Drive:\n\n1. This dashboard stores data in your browser (localStorage)\n2. For real Google Drive sync, deploy this HTML file to a web server\n3. Register a Google OAuth Client ID at console.cloud.google.com\n4. Enable Google Sheets API & Google Drive API\n5. Replace the CLIENT_ID in the code with yours\n\nFor now, data is safely stored locally and can be exported to Excel.`;
-  alert(info);
+  // Initiate Google OAuth popup
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: SCOPES,
+    callback: async (tokenResponse) => {
+      if (tokenResponse.error) { toast('Google sign-in failed: ' + tokenResponse.error, 'error'); return; }
+      accessToken = tokenResponse.access_token;
+      // Get user info
+      const resp = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: 'Bearer ' + accessToken } });
+      googleUser = await resp.json();
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> ${googleUser.name || 'Connected'}`;
+      btn.classList.add('signed-in');
+      const ds = document.getElementById('driveStatus');
+      if (ds) ds.textContent = `✅ Connected as ${googleUser.email} — entries auto-save to your Drive`;
+      toast('✅ Signed in as ' + (googleUser.email||''), 'success');
+      await ensureSpreadsheet();
+    }
+  });
+  client.requestAccessToken();
+}
+
+async function ensureSpreadsheet() {
+  if (!accessToken) return;
+  const name = 'StudenTrack — Work Hours ' + new Date().getFullYear();
+  // Search for existing sheet
+  const search = await fetch(`https://www.googleapis.com/drive/v3/files?q=name='${name}' and mimeType='application/vnd.google-apps.spreadsheet' and trashed=false`, { headers: { Authorization: 'Bearer ' + accessToken } });
+  const searchData = await search.json();
+  if (searchData.files && searchData.files.length > 0) {
+    spreadsheetId = searchData.files[0].id;
+    toast('📋 Connected to existing Drive sheet', 'success');
+  } else {
+    // Create new spreadsheet with headers
+    const create = await fetch('https://sheets.googleapis.com/v4/spreadsheets', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ properties: { title: name }, sheets: [{ properties: { title: 'Work Entries' } }, { properties: { title: 'Monthly Summary' } }] })
+    });
+    const sheet = await create.json();
+    spreadsheetId = sheet.spreadsheetId;
+    // Write headers
+    await writeSheetRow('Work Entries', [['Date','Day','Job','Type','Start','End','Break(min)','Hours','Gross €','Pension €','Net €','Notes','Logged At']]);
+    toast('📋 New Drive sheet created: ' + name, 'success');
+  }
+}
+
+async function writeSheetRow(sheetName, values) {
+  if (!accessToken || !spreadsheetId) return;
+  await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(sheetName)}:append?valueInputOption=RAW`, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ values })
+  });
+}
+
+async function syncEntryToDrive(entry) {
+  if (!accessToken || !spreadsheetId) return;
+  const job = getJob(entry.jobId);
+  const earn = calcEntryEarnings(entry);
+  const d = new Date(entry.date+'T00:00');
+  const row = [entry.date, ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()], job?job.name:'Unknown', job?job.type:'—', entry.start, entry.end, entry.break||0, entry.hours, earn.gross, earn.pension, earn.net, entry.notes||'', entry.logged||''];
+  await writeSheetRow('Work Entries', [row]);
 }
 
 // ============================================================
